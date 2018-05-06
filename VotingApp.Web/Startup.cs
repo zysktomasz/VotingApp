@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace VotingApp.Web
 {
@@ -22,7 +25,13 @@ namespace VotingApp.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"node_modules")),
+                RequestPath = new PathString("/vendor")
+            });
+
             app.UseMvcWithDefaultRoute();
         }
     }
