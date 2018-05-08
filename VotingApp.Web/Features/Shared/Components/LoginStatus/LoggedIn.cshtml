@@ -1,0 +1,11 @@
+﻿@model VotingApp.Core.Models.ApplicationUser
+<form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link">Hello @Model.Email!</a>
+        </li>
+        <li class="nav-item">
+            <button type="submit" class="btn btn-secondary">Log out</button>
+        </li>
+    </ul>
+</form> 
