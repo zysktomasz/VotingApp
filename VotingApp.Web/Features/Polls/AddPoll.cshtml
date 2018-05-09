@@ -1,5 +1,7 @@
 ﻿@model VotingApp.Web.Features.Polls.PollAddViewModel
 
+@ViewData["hehe"]
+
 <form asp-controller="Polls" asp-action="AddPoll" method="post">
     <h4>Create New Poll.</h4>
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -20,20 +22,16 @@
     <button class="btn btn-outline-secondary add_button" type="button">Add new answer field</button>
 </form>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('.answers_wrapper').on("click", ".remove_button", function (e) { //user click on remove text
             e.preventDefault(); $(this).parent('div').parent('div').remove();
         })
 
-        var answerHTML = '<div class="input-group col-8 mb-3"><input asp-for="Answers" class="form-control" /><div class="input-group-append"> <button class="btn btn-outline-secondary remove_button" type="button">Remove</button></div></div>';
+        var answerHTML = '<div class="input-group col-8 mb-3"><input class="form-control" type="text" data-val="true" data-val-required="The Answers field is required." id="Answers" name="Answers" /><div class="input-group-append"> <button class="btn btn-outline-secondary remove_button" type="button">Remove</button></div></div>';
         $(".add_button").click(function () {
             $(".answers_wrapper").append(answerHTML);
         });
 
     });
-    
 </script>

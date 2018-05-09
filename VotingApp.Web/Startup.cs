@@ -7,8 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using VotingApp.Core.Interfaces;
 using VotingApp.Core.Models;
 using VotingApp.Infrastructure.Data;
+using VotingApp.Web.Services;
 
 namespace VotingApp.Web
 {
@@ -53,6 +55,8 @@ namespace VotingApp.Web
 
             services.AddMvc()
                     .AddFeatureFolders();
+
+            services.AddScoped<IPoll, PollService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
