@@ -13,6 +13,9 @@ namespace VotingApp.Infrastructure.Data
         {
         }
 
+        public DbSet<Poll> Polls { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
