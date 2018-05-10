@@ -29,7 +29,7 @@ namespace VotingApp.Web.Features.Polls
 
         public IActionResult AddPoll()
         {
-            return View();
+            return View(new PollAddViewModel());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -49,7 +49,7 @@ namespace VotingApp.Web.Features.Polls
                 };
 
                 _polls.Add(newPoll);
-                return View();
+                return RedirectToAction(nameof(AddPoll));
             }
 
             return View(model);
