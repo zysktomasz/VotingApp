@@ -61,11 +61,26 @@ namespace VotingApp.Web.Features.Polls
             var userPolls = _polls.GetPollsByAuthorId(currentUserId)
                     .Select(poll => new MyPollsListViewModel
                     {
+                        Id = poll.PollId,
                         Question = poll.Question,
                         TotalVotes = poll.Answers.Sum(answer => answer.Votes)
                     }).ToList();
 
             return View(userPolls);
+        }
+
+        [Route("[controller]/[action]/{pollId}")]
+        public IActionResult MyPolls(int pollId)
+        {
+            var poll = _polls.GetPollById(pollId);
+            var model = new MyPollsItemViewModel
+            {
+                Id = poll.PollId,
+                Question = poll.Question,
+                Answers = poll.Answers.ToList()
+            };
+
+            return View("~/Features/Polls/MyPollsItem.cshtml", model);
         }
     }
 }

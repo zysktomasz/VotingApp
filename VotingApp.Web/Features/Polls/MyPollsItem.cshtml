@@ -1,0 +1,27 @@
+﻿@model VotingApp.Web.Features.Polls.MyPollsItemViewModel
+
+<div class="jumbotron">
+    <h2 class="display-4">@Model.Question</h2>
+
+    <div class="row">
+        <div class="col-lg-7">
+            <ul class="list-group list-group-flush">
+                @foreach (var answer in Model.Answers)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @answer.Description
+                    <span class="badge badge-primary badge-pill">@answer.Votes</span>
+            </li>
+            }
+            </ul>
+        </div>
+        <div class="col-lg-5">
+            <button type="button" class="btn btn-secondary btn-block">Go to Voting</button>
+            <button type="button" class="btn btn-info btn-block">Get summary in .PDF</button>
+            <form asp-action="DeletePoll" method="post">
+                <input type="hidden" asp-for="@Model.Id" />
+                <button type="submit" class="btn btn-danger btn-block" style="margin-top: 5px;">Delete (permanent)</button>
+            </form>
+        </div>
+    </div>
+</div>

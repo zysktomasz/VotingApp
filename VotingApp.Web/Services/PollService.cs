@@ -24,6 +24,13 @@ namespace VotingApp.Web.Services
             _context.SaveChanges();
         }
 
+        public Poll GetPollById(int pollId)
+        {
+            return _context.Polls
+                    .Include(poll => poll.Answers)
+                .FirstOrDefault(poll => poll.PollId == pollId);
+        }
+
         public IEnumerable<Poll> GetPollsByAuthorId(string userId)
         {
             return _context.Polls
