@@ -6,6 +6,7 @@
             <th scope="col">#</th>
             <th scope="col">Question</th>
             <th scope="col">Total Votes</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -14,8 +15,16 @@
         {
         <tr>
             <th scope="row">@number</th>
-            <td>@poll.Question</td>
+            <td>
+                <a asp-action="MyPolls" asp-route-pollId="@poll.Id">"@poll.Question"</a>
+            </td>
             <td>@poll.TotalVotes</td>
+            <td>
+                <form asp-action="DeletePoll" method="post">
+                    <input type="hidden" asp-for="@poll.Id" />
+                    <button type="submit" class="btn btn-danger">Delete (permanent)</button>
+                </form>
+            </td>
         </tr>
         number++;
         }

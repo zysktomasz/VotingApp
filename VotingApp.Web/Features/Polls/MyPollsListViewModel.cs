@@ -7,6 +7,7 @@ namespace VotingApp.Web.Features.Polls
 {
     public class MyPollsListViewModel
     {
+        public int Id { get; set; }
         public string Question { get; set; }
         public int TotalVotes { get; set; }
     }
