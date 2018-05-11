@@ -54,5 +54,18 @@ namespace VotingApp.Web.Features.Polls
 
             return View(model);
         }
+
+        public async Task<IActionResult> MyPolls()
+        {
+            var currentUserId = (await _userManager.GetUserAsync(User)).Id;
+            var userPolls = _polls.GetPollsByAuthorId(currentUserId)
+                    .Select(poll => new MyPollsListViewModel
+                    {
+                        Question = poll.Question,
+                        TotalVotes = poll.Answers.Sum(answer => answer.Votes)
+                    }).ToList();
+
+            return View(userPolls);
+        }
     }
 }

@@ -8,6 +8,6 @@ namespace VotingApp.Core.Interfaces
     public interface IPoll
     {
         void Add(Poll newPoll);
-
+        IEnumerable<Poll> GetPollsByAuthorId(string userId);
     }
 }

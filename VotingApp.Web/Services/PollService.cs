@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,5 +23,14 @@ namespace VotingApp.Web.Services
             _context.Add(newPoll);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Poll> GetPollsByAuthorId(string userId)
+        {
+            return _context.Polls
+                    .Include(poll => poll.Answers)
+                .Where(poll => poll.UserId == userId)
+                .OrderByDescending(poll => poll.PollId);
+        }
+
     }
 }

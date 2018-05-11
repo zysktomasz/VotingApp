@@ -1,0 +1,25 @@
+﻿@model List<VotingApp.Web.Features.Polls.MyPollsListViewModel>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Question</th>
+            <th scope="col">Total Votes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int number = 1;
+        @foreach (var poll in Model)
+        {
+        <tr>
+            <th scope="row">@number</th>
+            <td>@poll.Question</td>
+            <td>@poll.TotalVotes</td>
+        </tr>
+        number++;
+        }
+            }
+
+    </tbody>
+</table>
