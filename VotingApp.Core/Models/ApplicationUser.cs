@@ -8,5 +8,6 @@ namespace VotingApp.Core.Models
     public class ApplicationUser : IdentityUser
     {
         public ICollection<Poll> Polls { get; set; }
+        public ICollection<Vote> Votes { get; set; }
     }
 }
