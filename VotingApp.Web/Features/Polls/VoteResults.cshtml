@@ -1,0 +1,31 @@
+﻿@model VotingApp.Web.Features.Polls.PollVoteViewModel
+
+
+<div class="jumbotron">
+    <h2 class="display-4">@Model.Question - RESULTS</h2>
+        <div class="row">
+            <div class="col-lg-7">
+                <table class="table table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Answer</th>
+                            <th scope="col">Votes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var answer in Model.Answers.OrderByDescending(a => a.Votes))
+                        {
+                        <tr>
+                            <td>@answer.Description</td>
+                            <td>@answer.Votes</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-5">
+                
+            </div>
+        </div>
+</div>

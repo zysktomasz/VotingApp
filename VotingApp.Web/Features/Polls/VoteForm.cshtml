@@ -11,18 +11,18 @@
             <div class="col-lg-7">
                 <div class="btn-group-vertical btn-block " data-toggle="buttons">
                     @foreach (var answer in Model.Answers)
-                {
-                    <label class="btn btn-secondary">
-                        <input hidden type="radio" asp-for="@answer" value="@answer.AnswerId" autocomplete="off"> @answer.Description
-                    </label>
-                }
+                    {
+                        <label class="btn btn-secondary">
+                            <input hidden type="radio" asp-for="@answer" value="@answer.AnswerId" autocomplete="off"> @answer.Description
+                        </label>
+                    }
                 </div>
             </div>
 
 
             <div class="col-lg-5">
                 <button type="submit" class="btn btn-success btn-block">Vote</button>
-                <button type="button" class="btn btn-warning btn-block">See Results</button>
+                <a asp-controller="Polls" asp-action="Vote" asp-route-pollid="@Model.PollId" asp-route-showResults=true class="btn btn-warning btn-block">See Results</a>
             </div>
 
         </div>

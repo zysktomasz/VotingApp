@@ -86,7 +86,7 @@ namespace VotingApp.Web.Features.Polls
         }
 
         [Route("[controller]/[action]/{pollId}")]
-        public IActionResult Vote(int pollId)
+        public IActionResult Vote(int pollId, bool showResults = false)
         {
             var poll = _polls.GetPollById(pollId);
 
@@ -97,7 +97,14 @@ namespace VotingApp.Web.Features.Polls
                 Answers = poll.Answers.ToList()
             };
 
-            return View(model);
+            if (showResults == true)
+            {
+                return View("~/Features/Polls/VoteResults.cshtml", model);
+            }
+            else
+            {
+                return View("~/Features/Polls/VoteForm.cshtml", model);
+            }
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -115,7 +122,7 @@ namespace VotingApp.Web.Features.Polls
                 };
 
                 _votes.AddVote(newVote);
-                return (RedirectToAction(nameof(MyPolls)));
+                return RedirectToAction(nameof(Vote), new { pollid = pollId, showResults = true });
             }
             return View();
 
