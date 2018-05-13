@@ -34,9 +34,17 @@ namespace VotingApp.Web.Services
         public IEnumerable<Poll> GetPollsByAuthorId(string userId)
         {
             return _context.Polls
-                    .Include(poll => poll.Answers)
+                        .Include(poll => poll.Answers)
                 .Where(poll => poll.UserId == userId)
                 .OrderByDescending(poll => poll.PollId);
+        }
+
+        public IEnumerable<Poll> GetAllPublic()
+        {
+            return _context.Polls
+                        .Include(poll => poll.Answers)
+                    .Where(poll => poll.Status == PollStatus.Public)
+                    .OrderByDescending(poll => poll.PollId);
         }
 
     }

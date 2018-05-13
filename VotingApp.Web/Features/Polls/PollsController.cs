@@ -26,7 +26,15 @@ namespace VotingApp.Web.Features.Polls
 
         public IActionResult Index()
         {
-            return View();
+            var model = _polls.GetAllPublic()
+                .Select(poll => new PollsListViewModel
+                {
+                    Id = poll.PollId,
+                    Question = poll.Question,
+                    TotalVotes = poll.Answers.Sum(answer => answer.Votes)
+                });
+
+            return View(model);
         }
 
         public IActionResult AddPoll()
@@ -61,7 +69,7 @@ namespace VotingApp.Web.Features.Polls
         {
             var currentUserId = (await _userManager.GetUserAsync(User)).Id;
             var userPolls = _polls.GetPollsByAuthorId(currentUserId)
-                    .Select(poll => new MyPollsListViewModel
+                    .Select(poll => new PollsListViewModel
                     {
                         Id = poll.PollId,
                         Question = poll.Question,
@@ -125,7 +133,6 @@ namespace VotingApp.Web.Features.Polls
                 return RedirectToAction(nameof(Vote), new { pollid = pollId, showResults = true });
             }
             return View();
-
         }
     }
 }

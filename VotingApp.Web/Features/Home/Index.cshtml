@@ -1,5 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<VotingApp.Web.Features.Polls.PollsListViewModel>
+
+<div class="card-deck" style="padding-top: 20px; padding-bottom: 10px;">
+    <div class="card border-dark text-success">
+        <div class="card-header display-4">Create Polls</div>
+        <div class="card-body text-dark">
+            <p class="card-text">Do you ever wonder what people think about some matter you are interested in? Create polls with custom answers and share it with other people</p>
+        </div>
+    </div>
+    <div class="card border-dark">
+        <div class="card-header text-success display-4">Vote</div>
+        <div class="card-body text-dark">
+            <p class="card-text">Leave your vote in one or more questions created by users with all kinds of interesting ideas.</p>
+        </div>
+    </div>
+    <div class="card border-dark">
+        <div class="card-header text-success display-4">Analyze</div>
+        <div class="card-body text-dark">
+            <p class="card-text">Doing university paper or just curious? Post your poll, collect answers and analyze them thanks to our usage of Google Charts and generating custom reports.</p>
+        </div>
+    </div>
+</div>
+
+<h2 class="display-4">Latest public polls</h2>
+@Html.Partial("~/Features/Polls/Index.cshtml")

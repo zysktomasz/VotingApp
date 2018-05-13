@@ -11,5 +11,6 @@ namespace VotingApp.Core.Interfaces
 
         Poll GetPollById(int pollId);
         IEnumerable<Poll> GetPollsByAuthorId(string userId);
+        IEnumerable<Poll> GetAllPublic();
     }
 }

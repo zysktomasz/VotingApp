@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace VotingApp.Web.Features.Polls
 {
-    public class MyPollsListViewModel
+    public class PollsListViewModel
     {
         public int Id { get; set; }
         public string Question { get; set; }

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<VotingApp.Web.Features.Polls.PollsListViewModel>
+
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Question</th>
+            <th scope="col">Total Votes</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var poll in Model)
+            {
+                <tr>
+                    <td>
+                        @poll.Question
+                    </td>
+                    <td>@poll.TotalVotes</td>
+                    <td>
+                         <a asp-controller="Polls" asp-action="Vote" asp-route-pollid="@poll.Id" class="btn btn-info btn-sm">Go Vote!</a>
+                    </td>
+                </tr>
+            }
+        
+
+    </tbody>
+</table>
