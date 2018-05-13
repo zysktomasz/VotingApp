@@ -120,11 +120,18 @@ namespace VotingApp.Web.Features.Polls
         public async Task<IActionResult> Vote(int pollId, int answer)
         {
             var poll = _polls.GetPollById(pollId); // lets me include reference to poll & answer in newVote
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (_votes.CheckIfUserAlreadyVoted(pollId, answer, currentUser))
+            {
+                ModelState.AddModelError("", "You have already voted in this poll.");   
+            }
+
             if (ModelState.IsValid)
             {
                 Vote newVote = new Vote
                 {
-                    User = await _userManager.GetUserAsync(User),
+                    User = currentUser,
                     PollId = pollId,
                     AnswerId = answer
                 };
@@ -132,7 +139,15 @@ namespace VotingApp.Web.Features.Polls
                 _votes.AddVote(newVote);
                 return RedirectToAction(nameof(Vote), new { pollid = pollId, showResults = true });
             }
-            return View();
+
+            var model = new PollVoteViewModel
+            {
+                PollId = poll.PollId,
+                Question = poll.Question,
+                Answers = poll.Answers.ToList()
+            };
+
+            return View("~/Features/Polls/VoteForm.cshtml", model);
         }
     }
 }
