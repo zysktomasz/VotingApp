@@ -57,6 +57,7 @@ namespace VotingApp.Web
                     .AddFeatureFolders();
 
             services.AddScoped<IPoll, PollService>();
+            services.AddScoped<IVote, VoteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

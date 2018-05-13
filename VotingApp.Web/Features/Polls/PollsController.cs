@@ -15,11 +15,13 @@ namespace VotingApp.Web.Features.Polls
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IPoll _polls;
+        private readonly IVote _votes;
 
-        public PollsController(UserManager<ApplicationUser> userManager, IPoll polls)
+        public PollsController(UserManager<ApplicationUser> userManager, IPoll polls, IVote votes)
         {
             _userManager = userManager;
             _polls = polls;
+            _votes = votes;
         }
 
         public IActionResult Index()
@@ -81,6 +83,42 @@ namespace VotingApp.Web.Features.Polls
             };
 
             return View("~/Features/Polls/MyPollsItem.cshtml", model);
+        }
+
+        [Route("[controller]/[action]/{pollId}")]
+        public IActionResult Vote(int pollId)
+        {
+            var poll = _polls.GetPollById(pollId);
+
+            var model = new PollVoteViewModel
+            {
+                PollId = poll.PollId,
+                Question = poll.Question,
+                Answers = poll.Answers.ToList()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        [Route("[controller]/[action]/{pollId}")]
+        public async Task<IActionResult> Vote(int pollId, int answer)
+        {
+            var poll = _polls.GetPollById(pollId); // lets me include reference to poll & answer in newVote
+            if (ModelState.IsValid)
+            {
+                Vote newVote = new Vote
+                {
+                    User = await _userManager.GetUserAsync(User),
+                    PollId = pollId,
+                    AnswerId = answer
+                };
+
+                _votes.AddVote(newVote);
+                return (RedirectToAction(nameof(MyPolls)));
+            }
+            return View();
+
         }
     }
 }

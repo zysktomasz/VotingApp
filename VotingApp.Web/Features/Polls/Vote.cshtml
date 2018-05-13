@@ -1,0 +1,30 @@
+﻿@model VotingApp.Web.Features.Polls.PollVoteViewModel
+
+
+<div class="jumbotron">
+    <h2 class="display-4">@Model.Question</h2>
+
+    <form asp-action="Vote" method="post">
+        <input type="hidden" asp-for="@Model.PollId" />
+        <div class="row">
+
+            <div class="col-lg-7">
+                <div class="btn-group-vertical btn-block " data-toggle="buttons">
+                    @foreach (var answer in Model.Answers)
+                {
+                    <label class="btn btn-secondary">
+                        <input hidden type="radio" asp-for="@answer" value="@answer.AnswerId" autocomplete="off"> @answer.Description
+                    </label>
+                }
+                </div>
+            </div>
+
+
+            <div class="col-lg-5">
+                <button type="submit" class="btn btn-success btn-block">Vote</button>
+                <button type="button" class="btn btn-warning btn-block">See Results</button>
+            </div>
+
+        </div>
+    </form>
+</div>

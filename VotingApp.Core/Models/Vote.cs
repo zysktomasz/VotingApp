@@ -12,7 +12,10 @@ namespace VotingApp.Core.Models
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 
+        public int PollId { get; set; }
         public Poll Poll { get; set; }
+
+        public int AnswerId { get; set; }
         public Answer Answer { get; set; }
     }
 }
