@@ -9,6 +9,6 @@ namespace VotingApp.Core.Interfaces
     {
         void AddVote(Vote newVote);
 
-        bool CheckIfUserAlreadyVoted(int pollId, int answerId, ApplicationUser user);
+        bool CheckIfUserAlreadyVoted(int pollId, ApplicationUser user);
     }
 }

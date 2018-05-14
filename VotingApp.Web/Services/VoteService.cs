@@ -27,9 +27,9 @@ namespace VotingApp.Web.Services
             _context.SaveChanges();
         }
 
-        public bool CheckIfUserAlreadyVoted(int pollId, int answerId, ApplicationUser user)
+        public bool CheckIfUserAlreadyVoted(int pollId, ApplicationUser user)
         {
-            return _context.Votes.Any(vote => vote.PollId == pollId && vote.AnswerId == answerId && vote.User == user);
+            return _context.Votes.Any(vote => vote.PollId == pollId && vote.User == user);
         }
     }
 }

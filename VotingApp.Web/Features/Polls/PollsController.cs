@@ -130,12 +130,17 @@ namespace VotingApp.Web.Features.Polls
 
         [HttpPost, ValidateAntiForgeryToken]
         [Route("[controller]/[action]/{pollId}")]
-        public async Task<IActionResult> Vote(int pollId, int answer)
+        public async Task<IActionResult> Vote(int pollId, int? answer)
         {
             var poll = _polls.GetPollById(pollId); // lets me include reference to poll & answer in newVote
             var currentUser = await _userManager.GetUserAsync(User);
 
-            if (_votes.CheckIfUserAlreadyVoted(pollId, answer, currentUser))
+            if (answer == null)
+            {
+                ModelState.AddModelError("", "You have to choose an answer.");
+            }
+            
+            if (_votes.CheckIfUserAlreadyVoted(pollId, currentUser))
             {
                 ModelState.AddModelError("", "You have already voted in this poll.");   
             }
@@ -146,7 +151,7 @@ namespace VotingApp.Web.Features.Polls
                 {
                     User = currentUser,
                     PollId = pollId,
-                    AnswerId = answer
+                    AnswerId = answer.Value
                 };
 
                 _votes.AddVote(newVote);
