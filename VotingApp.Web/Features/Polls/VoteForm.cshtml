@@ -3,11 +3,9 @@
 
 <div class="jumbotron">
     <h2 class="display-4">@Model.Question</h2>
-
     <form asp-action="Vote" method="post">
         <input type="hidden" asp-for="@Model.PollId" />
         <div class="row">
-
             <div class="col-lg-7">
                 <div class="btn-group-vertical btn-block " data-toggle="buttons">
                     @foreach (var answer in Model.Answers)
@@ -18,14 +16,11 @@
                     }
                 </div>
             </div>
-
-
             <div class="col-lg-5">
-                <div asp-validation-summary="All" class="text-danger"></div>
                 <button type="submit" class="btn btn-success btn-block">Vote</button>
                 <a asp-controller="Polls" asp-action="Vote" asp-route-pollid="@Model.PollId" asp-route-showResults=true class="btn btn-warning btn-block">See Results</a>
+                <div asp-validation-summary="All" class="text-danger"></div>
             </div>
-
         </div>
     </form>
 </div>

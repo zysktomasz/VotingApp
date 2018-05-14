@@ -59,7 +59,7 @@ namespace VotingApp.Web.Features.Polls
                 };
 
                 _polls.Add(newPoll);
-                return RedirectToAction(nameof(AddPoll));
+                return RedirectToAction(nameof(MyPolls), new { pollId = newPoll.PollId });
             }
 
             return View(model);
