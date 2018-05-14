@@ -56,6 +56,7 @@ namespace VotingApp.Web.Services
             try
             {
                 _context.Polls.Remove(pollToRemove);
+                _context.Answers.RemoveRange(pollToRemove.Answers);
                 _context.SaveChanges();
             }
             catch (DbUpdateException ex)
