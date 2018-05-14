@@ -16,12 +16,12 @@
         <tr>
             <th scope="row">@number</th>
             <td>
-                <a asp-action="MyPolls" asp-route-pollId="@poll.Id">"@poll.Question"</a>
+                <a asp-action="MyPollsItem" asp-route-pollId="@poll.Id">"@poll.Question"</a>
             </td>
             <td>@poll.TotalVotes</td>
             <td>
-                <form asp-action="DeletePoll" method="post">
-                    <input type="hidden" asp-for="@poll.Id" />
+                <form asp-controller="Polls" asp-action="DeletePoll" 
+                      asp-route-pollId="@poll.Id" method="post">
                     <button type="submit" class="btn btn-danger">Delete (permanent)</button>
                 </form>
             </td>

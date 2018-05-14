@@ -47,5 +47,21 @@ namespace VotingApp.Web.Services
                     .OrderByDescending(poll => poll.PollId);
         }
 
+        public void Delete(int? pollId)
+        {
+            var pollToRemove = _context.Polls
+                    .Include(poll => poll.Answers)
+                .FirstOrDefault(poll => poll.PollId == pollId);
+
+            try
+            {
+                _context.Polls.Remove(pollToRemove);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+
+            }
+        }
     }
 }

@@ -59,16 +59,29 @@ namespace VotingApp.Web.Features.Polls
                 };
 
                 _polls.Add(newPoll);
-                return RedirectToAction(nameof(MyPolls), new { pollId = newPoll.PollId });
+                return RedirectToAction(nameof(MyPollsItem), new { pollId = newPoll.PollId });
             }
 
             return View(model);
         }
 
+        [HttpPost, ValidateAntiForgeryToken]
+        [Route("[controller]/[action]/{pollId}")]
+        public IActionResult DeletePoll(int? pollId)
+        {
+            if (pollId == null)
+                return NotFound();
+            
+            // ADD VALDIATION if pollid incorrect
+            _polls.Delete(pollId);
+
+            return RedirectToAction(nameof(MyPolls));
+        }
+
         public async Task<IActionResult> MyPolls()
         {
             var currentUserId = (await _userManager.GetUserAsync(User)).Id;
-            var userPolls = _polls.GetPollsByAuthorId(currentUserId)
+            var model = _polls.GetPollsByAuthorId(currentUserId)
                     .Select(poll => new PollsListViewModel
                     {
                         Id = poll.PollId,
@@ -76,11 +89,11 @@ namespace VotingApp.Web.Features.Polls
                         TotalVotes = poll.Answers.Sum(answer => answer.Votes)
                     }).ToList();
 
-            return View(userPolls);
+            return View(model);
         }
 
-        [Route("[controller]/[action]/{pollId}")]
-        public IActionResult MyPolls(int pollId)
+        [Route("[controller]/MyPolls/{pollId}")]
+        public IActionResult MyPollsItem(int pollId)
         {
             var poll = _polls.GetPollById(pollId);
             var model = new MyPollsItemViewModel
@@ -90,7 +103,7 @@ namespace VotingApp.Web.Features.Polls
                 Answers = poll.Answers.ToList()
             };
 
-            return View("~/Features/Polls/MyPollsItem.cshtml", model);
+            return View(model);
         }
 
         [Route("[controller]/[action]/{pollId}")]

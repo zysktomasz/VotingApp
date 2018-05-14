@@ -17,10 +17,10 @@
         </div>
         <div class="col-lg-5">
             <a asp-controller="Polls" asp-action="Vote" asp-route-pollid="@Model.Id" class="btn btn-secondary btn-block">Go to Voting</a>
-            <button type="button" class="btn btn-info btn-block">Get summary in .PDF</button>
-            <form asp-action="DeletePoll" method="post">
-                <input type="hidden" asp-for="@Model.Id" />
-                <button type="submit" class="btn btn-danger btn-block" style="margin-top: 5px;">Delete (permanent)</button>
+            <button type="button" class="btn btn-info btn-block" style="margin-bottom: 10px;">Get summary in .PDF</button>
+            <form asp-controller="Polls" asp-action="DeletePoll"
+                  asp-route-pollId="@Model.Id" method="post">
+                <button type="submit" class="btn btn-danger btn-block">Delete (permanent)</button>
             </form>
         </div>
     </div>
