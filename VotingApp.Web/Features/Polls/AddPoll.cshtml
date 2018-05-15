@@ -16,18 +16,32 @@
             </div>
         </div>
         @if (Model?.Answers?.Count() > 1)
-    {
-        @foreach (var answer in Model.Answers?.Where(val => val != null).Skip(1))
         {
-            <div class="input-group col-8 mb-3">
-                <input asp-for="Answers" class="form-control" value="@answer" />
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary remove_button" type="button">Remove</button>
+            @foreach (var answer in Model.Answers?.Where(val => val != null).Skip(1))
+            {
+                <div class="input-group col-8 mb-3">
+                    <input asp-for="Answers" class="form-control" value="@answer" />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary remove_button" type="button">Remove</button>
+                    </div>
                 </div>
-            </div>
+            }
         }
-    }
 
+    </div>
+
+
+    <div class="form-check custom-control custom-radio">
+        <input class="form-check-input custom-control-input" type="radio" name="Status" id="Public" value="0" checked>
+        <label class="form-check-label custom-control-label" for="Public">
+            Public
+        </label>
+    </div>
+    <div class="form-check custom-control custom-radio">
+        <input class="form-check-input custom-control-input" type="radio" name="Status" id="Private" value="1">
+        <label class="form-check-label custom-control-label" for="Private">
+            Private
+        </label>
     </div>
     <button type="submit" class="btn btn-default">Add</button>
     <button class="btn btn-outline-secondary add_button" type="button">Add new answer field</button>

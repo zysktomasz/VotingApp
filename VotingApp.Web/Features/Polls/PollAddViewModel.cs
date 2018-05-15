@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using VotingApp.Core.Models;
 
 namespace VotingApp.Web.Features.Polls
 {
@@ -12,7 +13,7 @@ namespace VotingApp.Web.Features.Polls
         public string Question { get; set; }
         [EnsureICollectionElementNotNull(ErrorMessage = "Answer cannot be empty.")]
         public ICollection<string> Answers { get; set; }
-
+        public PollStatus Status { get; set; }
     }
 
     public class EnsureICollectionElementNotNullAttribute : ValidationAttribute

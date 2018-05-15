@@ -43,7 +43,7 @@ namespace VotingApp.Web.Features.Polls
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPoll([Bind("Question,Answers")] PollAddViewModel model)
+        public async Task<IActionResult> AddPoll([Bind("Question,Answers,Status")] PollAddViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace VotingApp.Web.Features.Polls
                     {
                         Description = s,
                     }).ToList(),
-                    Status = PollStatus.Public,
+                    Status = model.Status,
                     User = await _userManager.GetUserAsync(User)
                 };
 
