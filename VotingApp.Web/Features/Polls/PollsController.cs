@@ -107,9 +107,10 @@ namespace VotingApp.Web.Features.Polls
         }
 
         [Route("[controller]/[action]/{pollId}")]
-        public IActionResult Vote(int pollId, bool showResults = false)
+        public async Task<IActionResult> Vote(int pollId, bool showResults = false)
         {
             var poll = _polls.GetPollById(pollId);
+            var currentUser = await _userManager.GetUserAsync(User);
 
             var model = new PollVoteViewModel
             {
@@ -124,6 +125,10 @@ namespace VotingApp.Web.Features.Polls
             }
             else
             {
+                if (_votes.CheckIfUserAlreadyVoted(pollId, currentUser))
+                {
+                    ModelState.AddModelError("", "You have already voted in this poll.");
+                }
                 return View("~/Features/Polls/VoteForm.cshtml", model);
             }
         }
@@ -166,6 +171,20 @@ namespace VotingApp.Web.Features.Polls
             };
 
             return View("~/Features/Polls/VoteForm.cshtml", model);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("[controller]/[action]/{pollId}")]
+        public JsonResult ResultsPieChart(int pollId)
+        {
+            var answers = _polls.GetPollById(pollId).Answers;
+
+            var resultsData = answers.Select(a => new {
+                    description = a.Description,
+                    votes = a.Votes
+                }).ToList();
+            return Json(resultsData);
         }
     }
 }

@@ -1,31 +1,88 @@
 ﻿@model VotingApp.Web.Features.Polls.PollVoteViewModel
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
+
+<script type="text/javascript">
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("ResultsPieChart", "Polls", new { pollId = Model.PollId })',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var dataArray = [
+                    ['Answer', 'Votes']
+                ];
+
+                $.each(response, function (i, item) {
+                    dataArray.push([item.description, item.votes]);
+                });
+                //Pie
+
+                var data = google.visualization.arrayToDataTable(dataArray);
+
+                // Set chart options
+                var options = {
+                    'title': 'Votes Pie Chart',
+                    'width': 600,
+                    'height': 400
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            },
+            failure: function (response) {
+                alert('failer');
+                alert(response.d);
+            },
+            error: function (response) {
+                alert('error');
+                alert(response.d);
+            }
+        });
+    }
+
+
+
+</script>
 
 <div class="jumbotron">
     <h2 class="display-4">@Model.Question - RESULTS</h2>
-        <div class="row">
-            <div class="col-lg-7">
-                <table class="table table-sm">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Answer</th>
-                            <th scope="col">Votes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    <div class="row">
+        <div class="col-lg-7">
+            <table class="table table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Answer</th>
+                        <th scope="col">Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                        @foreach (var answer in Model.Answers.OrderByDescending(a => a.Votes))
-                        {
+                    @foreach (var answer in Model.Answers.OrderByDescending(a => a.Votes))
+                    {
                         <tr>
                             <td>@answer.Description</td>
                             <td>@answer.Votes</td>
                         </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-lg-5">
-                
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
+        <div class="col-lg-5">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-11">
+            <div id="chart_div"></div>
+        </div>
+    </div>
 </div>
