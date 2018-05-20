@@ -51,16 +51,17 @@ namespace VotingApp.Web.Features.Account
             return View(model);
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
             if (_signInManager.IsSignedIn(User))
                 return ReturnBackToHome();
 
-            return View();
+            var model = new AccountLoginViewModel { ReturnUrl = returnUrl };
+            return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Bind("UserName,Password")] AccountLoginViewModel model)
+        public async Task<IActionResult> Login(AccountLoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -68,15 +69,17 @@ namespace VotingApp.Web.Features.Account
                         model.UserName, model.Password, isPersistent: false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return ReturnBackToHome();
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt");
-                    return View(model);
+                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    {
+                        return Redirect(model.ReturnUrl);
+                    }
+                    else
+                    {
+                        return ReturnBackToHome();
+                    }
                 }
             }
-
+            ModelState.AddModelError(string.Empty, "Invalid login attempt");
             return View(model);
         }
 
