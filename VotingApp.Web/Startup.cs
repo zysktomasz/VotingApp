@@ -10,7 +10,7 @@ using System.IO;
 using VotingApp.Core.Interfaces;
 using VotingApp.Core.Models;
 using VotingApp.Infrastructure.Data;
-using VotingApp.Web.Services;
+using VotingApp.Infrastructure.Services;
 
 namespace VotingApp.Web
 {

@@ -7,7 +7,7 @@ using VotingApp.Core.Interfaces;
 using VotingApp.Core.Models;
 using VotingApp.Infrastructure.Data;
 
-namespace VotingApp.Web.Services
+namespace VotingApp.Infrastructure.Services
 {
     public class PollService : IPoll
     {
