@@ -21,6 +21,7 @@ namespace VotingApp.Web.Features.Polls
         public override bool IsValid(object value)
         {
             var list = value as ICollection<string>;
+            if (list == null) return false;
 
             if (list.Any(answer => answer == null))
             {
@@ -29,4 +30,5 @@ namespace VotingApp.Web.Features.Polls
             return true;
         }
     }
+
 }
