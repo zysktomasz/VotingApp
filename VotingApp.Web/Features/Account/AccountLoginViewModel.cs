@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VotingApp.Web.ViewModels
+namespace VotingApp.Web.Features.Account
 {
     public class AccountLoginViewModel
     {

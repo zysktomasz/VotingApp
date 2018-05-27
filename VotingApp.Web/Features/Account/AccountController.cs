@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VotingApp.Core.Models;
-using VotingApp.Web.ViewModels;
 
 namespace VotingApp.Web.Features.Account
 {
